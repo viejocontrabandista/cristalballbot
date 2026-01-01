@@ -5,14 +5,14 @@ import threading
 import time
 import logging
 
-TOKEN = "8446237819:AAGnhQ1iD2ESgJLcHtOfOPT08QAenENYAmM"  # Pega aquí el token nuevo que te dio BotFather
+TOKEN = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"  # Pega aquí el token nuevo que te dio BotFather
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "🔮 *Bienvenido a Numeria: El Oráculo*\n\n"
         "Soy tu guía numerológico.\n\n"
         "• /individual - Estudio personal\n"
-        "• /pareja - Compatibilidad amorosa\n"
+        "• Próximamente: /pareja - Compatibilidad amorosa 💞\n"
         "• /ayuda - Instrucciones",
         parse_mode='Markdown'
     )
