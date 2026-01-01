@@ -27,10 +27,14 @@ async def ayuda(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def individual(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "🔮 *Estudio Numerológico Individual*\n\n"
-        "Dime tu nombre y fecha de nacimiento"
-        "EJEMPLO:"
+        "Por favor, envía tus datos en este formato exacto:\n\n"
+        "📌 *Ejemplo:*\n"
         "*Nombre:* Juan Pérez\n"
-        "*Fecha:* 31/12/1990\n",
+        "*Fecha:* 31/12/1990\n\n"
+        "Si querés compatibilidad con tu pareja, agregá:\n"
+        "*Nombre pareja:* María Gómez\n"
+        "*Fecha pareja:* 15/05/1988\n\n"
+        "¡Espero tu mensaje! ✨",
         parse_mode='Markdown'
     )
     context.user_data['esperando'] = 'individual'
