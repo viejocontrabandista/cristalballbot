@@ -5,17 +5,17 @@
     "S": 1, "T": 2, "U": 3, "V": 4, "W": 5, "X": 6, "Y": 7, "Z": 8
   },
   "significados": {
-    "1": "Liderazgo, independencia, iniciativa y originalidad.",
-    "2": "Cooperación, sensibilidad, diplomacia y equilibrio.",
-    "3": "Creatividad, expresión, alegría y comunicación.",
-    "4": "Estabilidad, trabajo duro, disciplina y organización.",
-    "5": "Libertad, aventura, cambio y versatilidad.",
-    "6": "Responsabilidad, amor familiar, armonía y servicio.",
-    "7": "Introspección, análisis, espiritualidad y sabiduría.",
-    "8": "Poder, ambición, éxito material y autoridad.",
-    "9": "Humanitarismo, compasión, generosidad y finalización.",
-    "11": "Intuición elevada, inspiración espiritual y sensibilidad psíquica (maestro).",
-    "22": "Constructor maestro, visión práctica grande y manifestación poderosa (maestro)."
+    "1": "Eres un líder nato, independiente y pionero. Tu camino es abrir puertas que otros no se atreven. Tienes una energía creativa poderosa, pero a veces puedes ser impaciente o egoísta si no equilibras tu fuerza.",
+    "2": "Sensibilidad, diplomacia y cooperación son tus dones. Buscas armonía y eres excelente mediador. Tu intuición es fuerte, aunque a veces dudas de ti mismo o te afecta demasiado lo que piensan los demás.",
+    "3": "Creatividad, alegría y expresión son tu esencia. Tienes un don para comunicar y hacer feliz a los demás. La vida te pide disfrutar y compartir tu talento, pero cuidado con dispersarte o evitar responsabilidades.",
+    "4": "Estabilidad, disciplina y trabajo duro te definen. Eres el constructor del grupo, confiable y práctico. Tu desafío es no volverte rígido o resistente al cambio cuando la vida pide flexibilidad.",
+    "5": "Libertad, aventura y cambio son tu combustible. Amas la variedad y aprendes de la experiencia. Tu lección es encontrar equilibrio entre la libertad y el compromiso, evitando excesos o evasión.",
+    "6": "Responsabilidad, amor y servicio al hogar/familia son tu misión. Tienes un corazón enorme y buscas armonía. A veces cargas demasiado con los problemas ajenos; aprender a poner límites es clave.",
+    "7": "Introspección, búsqueda espiritual y análisis profundo. Prefieres la calidad a la cantidad en relaciones. Tu camino es el conocimiento interior, pero cuidado con aislarte o ser demasiado crítico.",
+    "8": "Poder, ambición y éxito material son tu terreno. Tienes capacidad para manejar dinero y autoridad. Tu karma es aprender que el verdadero poder está en el equilibrio entre material y espiritual.",
+    "9": "Compasión, generosidad y humanitarismo. Vienes a cerrar ciclos y ayudar a los demás. Tienes sabiduría acumulada, pero a veces te cuesta soltar el pasado o te sacrificas demasiado.",
+    "11": "Intuición elevada y sensibilidad espiritual (número maestro). Tienes un potencial inspirador enorme. Tu desafío es no sobrecargarte con la energía de los demás y confiar en tu visión.",
+    "22": "Constructor maestro con visión práctica. Puedes manifestar proyectos grandes para el bien común. Tu lección es combinar sueño con acción concreta sin abrumarte por la responsabilidad."
   },
   "compatibilidad": {
     "alta": [[1,3,5,9], [2,4,6,8], [3,1,5,9], [4,2,6,8], [5,1,3,9], [6,2,4,9], [7,7], [8,2,4], [9,1,3,5,6]],
