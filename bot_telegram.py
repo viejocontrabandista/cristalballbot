@@ -40,10 +40,10 @@ async def individual(update: Update, context: ContextTypes.DEFAULT_TYPE):
     context.user_data.clear()
 
     keyboard = [
-        [InlineKeyboardButton("🧑 Ingresar nombre", callback_data="set_nombre")],
-        [InlineKeyboardButton("📅 Ingresar fecha", callback_data="set_fecha")],
-        [InlineKeyboardButton("🔮 Obtener lectura", callback_data="generar")]
-    ]
+    [InlineKeyboardButton("🧑 Ingresar nombre y apellido", callback_data="set_nombre")],
+    [InlineKeyboardButton("📅 Ingresar fecha de nacimiento", callback_data="set_fecha")],
+    [InlineKeyboardButton("🔮 Obtener lectura", callback_data="generar")]
+]
 
     await update.message.reply_text(
         "🔮 *Estudio Numerológico Individual*\n\n"
