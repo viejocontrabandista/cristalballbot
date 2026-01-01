@@ -77,22 +77,29 @@ def porcentaje_afinidad(num1: int, num2: int) -> int:
 def generar_reporte(nombre: str, fecha: str, nombre_pareja: str = None, fecha_pareja: str = None) -> str:
     nv = numero_vida(fecha)
     nd = numero_destino(nombre)
-    texto = f"🔮 *Estudio Numerológico para {nombre.upper()}*\n\n"
-    texto += f"• Número de Vida: *{nv}*\n{significados[str(nv)]}\n\n"
-    texto += f"• Número de Destino: *{nd}*\n{significados[str(nd)]}\n\n"
+    nombre_corto = nombre.split()[0] if nombre else "amigo/a"
+    texto = f"🔮 *Estudio Numerológico Personalizado para {nombre.upper()}*\n\n"
+    texto += f"Querido/a {nombre_corto}, las estrellas y los números han hablado sobre tu esencia...\n\n"
+    texto += f"• *Tu Número de Vida (Misión del Alma): {nv}*\n{significados[str(nv)]}\n\n"
+    texto += f"• *Tu Número de Destino (Talento Natural): {nd}*\n{significados[str(nd)]}\n\n"
+    texto += "Tu combinación energética es única y poderosa. Cuando alineas tu acción diaria con estas vibraciones, la vida fluye con magia y sincronías increíbles ✨\n\n"
     
     if nombre_pareja and fecha_pareja:
         nv2 = numero_vida(fecha_pareja)
         porc = porcentaje_afinidad(nv, nv2)
-        texto += f"💞 *Compatibilidad con {nombre_pareja.upper()}*\n"
-        texto += f"Su Número de Vida: *{nv2}* | Tuyo: *{nv}*\n"
-        texto += f"Afinidad energética: *{porc}%*\n"
+        texto += f"💞 *Análisis de Compatibilidad con {nombre_pareja.upper()}*\n"
+        texto += f"Su vibración principal: {nv2} | Tu vibración: {nv}\n"
+        texto += f"Afinidad energética total: *{porc}%*\n\n"
         if porc >= 80:
-            texto += "Excelente armonía, gran potencial juntos ✨\n"
+            texto += "¡Una conexión del alma! Tienen potencial para construir algo eterno y profundo. El universo los juntó por una razón hermosa ❤️\n"
         elif porc >= 60:
-            texto += "Buena compatibilidad, fluye con esfuerzo ❤️\n"
+            texto += "Buena química con lecciones valiosas. Con comunicación abierta, pueden crecer juntos y crear magia 🌟\n"
         else:
-            texto += "Desafíos presentes, pero gran crecimiento espiritual 🌱\n"
+            texto += "Una relación kármica de crecimiento. Los desafíos son oportunidades disfrazadas para evolucionar espiritualmente 🌱\n"
+    
+    # Cold reading al final
+    cold = generar_cold_reading()
+    texto += "\n🃏 *Lectura Intuitiva Personal*\n" + cold
     
     return texto
 
