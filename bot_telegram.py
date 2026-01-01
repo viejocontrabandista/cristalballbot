@@ -24,6 +24,19 @@ async def ayuda(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "Pronto te pediré los datos paso a paso 🔮",
         parse_mode='Markdown'
     )
+    async def individual(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "🔮 *Estudio Numerológico Individual*\n\n"
+        "Envía tu *nombre completo* y *fecha de nacimiento* en este formato:\n\n"
+        "Nombre: Juan Pérez\n"
+        "Fecha: 31/12/1990\n\n"
+        "Ejemplo:\n"
+        "Nombre: María Gómez\n"
+        "Fecha: 15/05/1988",
+        parse_mode='Markdown'
+    )
+    # Guardamos que el usuario eligió individual
+    context.user_data['modo'] = 'individual'
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
@@ -31,7 +44,8 @@ if __name__ == '__main__':
     app = Application.builder().token(TOKEN).build()
     
     app.add_handler(CommandHandler("start", start))
-    app.add_handler(CommandHandler("ayuda", ayuda))
+    app.add_handler(CommandHandler("ayuda", ayuda))    
+    app.add_handler(CommandHandler("individual", individual))
     
     print("🤖 Numeria: El Oráculo iniciado - Online 24/7 en Railway")
 
