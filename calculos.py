@@ -36,48 +36,10 @@ def porcentaje_afinidad(num1: int, num2: int) -> int:
         return 75
     return 50
 
-import json
-import os
-
-# Cargar datos numerológicos
-with open('numerologia_data.json', 'r', encoding='utf-8') as f:
-    data = json.load(f)
-
-tabla = data['tabla_letras']
-significados = data['significados']
-
-HISTORIAL_FILE = 'historial.json'
-
-def reducir_numero(n):
-    while n > 9 and n not in [11, 22]:
-        n = sum(int(d) for d in str(n))
-    return n
-
-def numero_vida(fecha_str: str) -> int:
-    dia, mes, año = map(int, fecha_str.split('/'))
-    return reducir_numero(dia + mes + año)
-
-def numero_destino(nombre: str) -> int:
-    nombre = nombre.upper().replace(" ", "")
-    suma = sum(tabla.get(letra, 0) for letra in nombre)
-    return reducir_numero(suma)
-
-def porcentaje_afinidad(num1: int, num2: int) -> int:
-    if num1 == num2:
-        return 95
-    pares_alta = [(1,3),(1,5),(1,9),(2,4),(2,6),(2,8),(3,1),(3,5),(3,9),
-                  (4,2),(4,6),(4,8),(5,1),(5,3),(5,9),(6,2),(6,4),(6,9),
-                  (7,7),(9,1),(9,3),(9,5),(9,6)]
-    if (num1, num2) in pares_alta or (num2, num1) in pares_alta:
-        return 85
-    if num1 in [11,22] or num2 in [11,22]:
-        return 75
-    return 50
-
 def generar_reporte(nombre: str, fecha: str, nombre_pareja: str = None, fecha_pareja: str = None) -> str:
     nv = numero_vida(fecha)
     nd = numero_destino(nombre)
-    nombre_corto = nombre.split()[0] if nombre else "amigo/a"
+    nombre_corto = nombre.split()[0] if ' ' in nombre else nombre
     texto = f"🔮 *Estudio Numerológico Personalizado para {nombre.upper()}*\n\n"
     texto += f"Querido/a {nombre_corto}, las estrellas y los números han hablado sobre tu esencia...\n\n"
     texto += f"• *Tu Número de Vida (Misión del Alma): {nv}*\n{significados[str(nv)]}\n\n"
@@ -97,8 +59,8 @@ def generar_reporte(nombre: str, fecha: str, nombre_pareja: str = None, fecha_pa
         else:
             texto += "Una relación kármica de crecimiento. Los desafíos son oportunidades disfrazadas para evolucionar espiritualmente 🌱\n"
     
-    # Cold reading al final
-    cold = generar_cold_reading
+    # Cold reading al final (corregido: con paréntesis)
+    cold = generar_cold_reading()
     texto += "\n🃏 *Lectura Intuitiva Personal*\n" + cold
     
     return texto
@@ -139,8 +101,9 @@ def guardar_consulta(nombre: str, fecha: str, nombre_pareja: str = None, fecha_p
     
     with open(HISTORIAL_FILE, 'w', encoding='utf-8') as f:
         json.dump(historial, f, ensure_ascii=False, indent=4)
+
 def generar_cold_reading(genero: str = None, consulta: str = None) -> str:
-    import random  # Import local para evitar problemas
+    import random
 
     frases = [
         "Siento que estás en un momento de gran claridad interna. Las respuestas que buscabas están empezando a llegar solas.",
