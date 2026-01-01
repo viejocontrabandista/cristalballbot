@@ -6,7 +6,8 @@ with open('numerologia_data.json', 'r', encoding='utf-8') as f:
     data = json.load(f)
 
 tabla = data['tabla_letras']
-significados = data['significados']
+significados = data['significados'] Nota: para que funcione la nueva lista, agrega al principio de calculos.py (después de cargar data):
+Pythondestino_significados = data['destino']
 
 HISTORIAL_FILE = 'historial.json'
 
