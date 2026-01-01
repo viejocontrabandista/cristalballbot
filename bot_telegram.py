@@ -27,9 +27,11 @@ async def ayuda(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def individual(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "🔮 *Estudio Numerológico Individual*\n\n"
-        "Envía tu información en este formato:\n\n"
+        "Envía tus datos. Si querés compatibilidad, agregá los de tu pareja:\n\n"
         "*Nombre:* Juan Pérez\n"
-        "*Fecha:* 31/12/1990",
+        "*Fecha:* 31/12/1990\n"
+        "*Nombre pareja:* María Gómez (opcional)\n"
+        "*Fecha pareja:* 15/05/1988 (opcional)",
         parse_mode='Markdown'
     )
     context.user_data['esperando'] = 'individual'
@@ -39,23 +41,26 @@ async def manejar_mensaje(update: Update, context: ContextTypes.DEFAULT_TYPE):
         texto = update.message.text.strip()
         nombre = None
         fecha = None
+        nombre_pareja = None
+        fecha_pareja = None
         for linea in texto.split('\n'):
             if linea.lower().startswith('nombre:'):
                 nombre = linea[7:].strip()
             elif linea.lower().startswith('fecha:'):
                 fecha = linea[6:].strip()
+            elif linea.lower().startswith('nombre pareja:'):
+                nombre_pareja = linea[14:].strip()
+            elif linea.lower().startswith('fecha pareja:'):
+                fecha_pareja = linea[13:].strip()
         
         if nombre and fecha:
-            reporte = generar_reporte(nombre, fecha)
+            reporte = generar_reporte(nombre, fecha, nombre_pareja, fecha_pareja)
             await update.message.reply_text(reporte, parse_mode='Markdown')
-            guardar_consulta(nombre, fecha, reporte=reporte)
+            guardar_consulta(nombre, fecha, nombre_pareja, fecha_pareja, reporte)
             context.user_data.clear()
         else:
             await update.message.reply_text(
-                "❌ Formato incorrecto.\n\n"
-                "Envía:\n"
-                "*Nombre:* tu nombre completo\n"
-                "*Fecha:* DD/MM/AAAA",
+                "❌ Faltan datos principales.\nEnvía al menos *Nombre:* y *Fecha:*",
                 parse_mode='Markdown'
             )
 
