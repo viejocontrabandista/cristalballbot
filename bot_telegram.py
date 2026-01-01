@@ -5,7 +5,7 @@ import threading
 import time
 import logging
 
-TOKEN = "8446237819:AAGJVPOvIrJd4xqQk120Jk7uzpiIdbdiwDY"  # Pega aquí el token nuevo que te dio BotFather
+TOKEN = "8446237819:AAGnhQ1iD2ESgJLcHtOfOPT08QAenENYAmM"  # Pega aquí el token nuevo que te dio BotFather
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
@@ -27,11 +27,9 @@ async def ayuda(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def individual(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "🔮 *Estudio Numerológico Individual*\n\n"
-        "Envía tus datos. Si querés compatibilidad, agregá los de tu pareja:\n\n"
+        "Dime tu nombre y fecha de nacimiento EJEMPLO:"
         "*Nombre:* Juan Pérez\n"
-        "*Fecha:* 31/12/1990\n"
-        "*Nombre pareja:* María Gómez (opcional)\n"
-        "*Fecha pareja:* 15/05/1988 (opcional)",
+        "*Fecha:* 31/12/1990\n",
         parse_mode='Markdown'
     )
     context.user_data['esperando'] = 'individual'
