@@ -27,7 +27,8 @@ async def ayuda(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def individual(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "🔮 *Estudio Numerológico Individual*\n\n"
-        "Dime tu nombre y fecha de nacimiento EJEMPLO:"
+        "Dime tu nombre y fecha de nacimiento"
+        "EJEMPLO:"
         "*Nombre:* Juan Pérez\n"
         "*Fecha:* 31/12/1990\n",
         parse_mode='Markdown'
