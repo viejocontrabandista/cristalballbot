@@ -5,7 +5,7 @@ import threading
 import time
 import logging
 
-TOKEN = "TU_NUEVO_TOKEN_AQUÍ"  # Pega aquí el token nuevo que te dio BotFather
+TOKEN = "8446237819:AAGJVPOvIrJd4xqQk120Jk7uzpiIdbdiwDY"  # Pega aquí el token nuevo que te dio BotFather
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
