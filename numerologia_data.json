@@ -17,6 +17,19 @@
     "11": "Intuición elevada y sensibilidad espiritual (número maestro). Tienes un potencial inspirador enorme. Tu desafío es no sobrecargarte con la energía de los demás y confiar en tu visión.",
     "22": "Constructor maestro con visión práctica. Puedes manifestar proyectos grandes para el bien común. Tu lección es combinar sueño con acción concreta sin abrumarte por la responsabilidad."
   },
+  "destino": {
+    "1": "Tu talento es el liderazgo y la originalidad. Expresas ideas nuevas y motivas a otros con tu iniciativa. Tu expresión externa es pionera y carismática.",
+    "2": "Tu don es la diplomacia y la sensibilidad. Te expresas con empatía, creando armonía y conexiones profundas. Los demás te ven como pacificador y confiable.",
+    "3": "Tu expresión es creativa y comunicativa. Tienes talento para el arte, la palabra y el entretenimiento. Los demás te perciben como alegre y magnético.",
+    "4": "Tu talento es la organización y la construcción. Te expresas con disciplina y practicidad, materializando ideas. Los demás te ven como pilar sólido.",
+    "5": "Tu expresión es libre y versátil. Tienes talento para adaptarte, viajar y comunicar cambios. Los demás te perciben como aventurero y magnético.",
+    "6": "Tu don es el servicio y el amor incondicional. Te expresas cuidando y embelleciendo el entorno. Los demás te ven como protector y armónico.",
+    "7": "Tu talento es el análisis y la búsqueda de verdad. Te expresas con profundidad intelectual y espiritual. Los demás te perciben como sabio y misterioso.",
+    "8": "Tu expresión es poderosa y ambiciosa. Tienes talento para los negocios, liderazgo y manejo de recursos. Los demás te ven como autoritario y exitoso.",
+    "9": "Tu don es la compasión y el humanitarismo. Te expresas con generosidad y visión global. Los demás te perciben como idealista e inspirador.",
+    "11": "Tu talento es la inspiración espiritual y la intuición elevada. Te expresas como canal de luz y visión. Los demás te ven como iluminado y sensitivo.",
+    "22": "Tu expresión es la del constructor maestro. Tienes talento para manifestar proyectos grandes y prácticos. Los demás te ven como visionario con base sólida."
+  },
   "compatibilidad": {
     "alta": [[1,3,5,9], [2,4,6,8], [3,1,5,9], [4,2,6,8], [5,1,3,9], [6,2,4,9], [7,7], [8,2,4], [9,1,3,5,6]],
     "nota": "Alta si coinciden pares comunes (ej: 1 con 3/5), media otros, baja opuestos (ej: 1-4). Para maestros: 11 bueno con 2/7, 22 con 4/6/8."
