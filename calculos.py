@@ -98,7 +98,7 @@ def generar_reporte(nombre: str, fecha: str, nombre_pareja: str = None, fecha_pa
             texto += "Una relación kármica de crecimiento. Los desafíos son oportunidades disfrazadas para evolucionar espiritualmente 🌱\n"
     
     # Cold reading al final
-    cold = generar_cold_reading()
+    cold = generar_cold_reading
     texto += "\n🃏 *Lectura Intuitiva Personal*\n" + cold
     
     return texto
