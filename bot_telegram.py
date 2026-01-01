@@ -5,7 +5,7 @@ from telegram.ext import Application, CommandHandler, ContextTypes
 from calculos import generar_reporte, consulta_existe, guardar_consulta
 
 # === TU TOKEN VA AQUÍ ENTRE COMILLAS ===
-TOKEN = "8446237819:AAFV_zPY7sX91uWptCqt3K4-WhD_ctoW6NU"
+TOKEN = "8446237819:AAFLQfBgVb5QjWZlrD9Fpi02VDTt_VQznWk"
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
@@ -25,10 +25,26 @@ async def ayuda(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 if __name__ == '__main__':
+    import threading
+    import time
+    import logging
+
+    logging.basicConfig(level=logging.INFO)
+
     app = Application.builder().token(TOKEN).build()
     
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("ayuda", ayuda))
     
-    print("Bot iniciado - Esperando mensajes...")
+    print("🤖 Numeria: El Oráculo iniciado - Online 24/7 en Railway")
+
+    # Función keep alive en hilo separado
+    def keep_alive():
+        while True:
+            time.sleep(30)
+            print("Keep alive - Bot activo en Railway")
+
+    threading.Thread(target=keep_alive, daemon=True).start()
+    
+    # Inicia el polling (bloquea, pero el keep alive sigue vivo)
     app.run_polling(drop_pending_updates=True)
