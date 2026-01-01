@@ -1,11 +1,21 @@
-from telegram import Update
-from telegram.ext import Application, CommandHandler, MessageHandler, ContextTypes, filters
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import (
+    Application,
+    CommandHandler,
+    MessageHandler,
+    ContextTypes,
+    CallbackQueryHandler,
+    filters
+)
 from calculos import generar_reporte, guardar_consulta
 import threading
 import time
 import logging
 
-TOKEN = "8446237819:AAGnhQ1iD2ESgJLcHtOfOPT08QAenENYAmM"  # Pega aquí el token nuevo que te dio BotFather
+TOKEN = "8446237819:AAGnhQ1iD2ESgJLcHtOfOPT08QAenENYAmM"
+
+
+# ───────────── COMANDOS ─────────────
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
@@ -17,6 +27,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         parse_mode='Markdown'
     )
 
+
 async def ayuda(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "Usa los comandos del menú.\n"
@@ -24,51 +35,86 @@ async def ayuda(update: Update, context: ContextTypes.DEFAULT_TYPE):
         parse_mode='Markdown'
     )
 
+
 async def individual(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    context.user_data.clear()
+
+    keyboard = [
+        [InlineKeyboardButton("🧑 Ingresar nombre", callback_data="set_nombre")],
+        [InlineKeyboardButton("📅 Ingresar fecha", callback_data="set_fecha")],
+        [InlineKeyboardButton("🔮 Obtener lectura", callback_data="generar")]
+    ]
+
     await update.message.reply_text(
         "🔮 *Estudio Numerológico Individual*\n\n"
-        "Dime tu nombre y fecha de nacimiento en este formato:\n\n"
-        "📌 *Ejemplo:*\n"
-        "*Nombre:* Juan Pérez\n"
-        "*Fecha:* 31/12/1990\n\n"
-        "¡Espero tu mensaje! ✨",
-        parse_mode='Markdown'
+        "Usá los botones para ingresar tus datos:",
+        reply_markup=InlineKeyboardMarkup(keyboard),
+        parse_mode="Markdown"
     )
-    context.user_data['esperando'] = 'individual'
+
+
+# ───────────── BOTONES ─────────────
+
+async def botones(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = update.callback_query
+    await query.answer()
+
+    data = query.data
+
+    if data == "set_nombre":
+        context.user_data["esperando"] = "nombre"
+        await query.message.reply_text("🧑 Escribí tu nombre completo:")
+
+    elif data == "set_fecha":
+        context.user_data["esperando"] = "fecha"
+        await query.message.reply_text("📅 Escribí tu fecha (DD/MM/AAAA):")
+
+    elif data == "generar":
+        nombre = context.user_data.get("nombre")
+        fecha = context.user_data.get("fecha")
+
+        if not nombre or not fecha:
+            await query.message.reply_text("❌ Falta nombre o fecha.")
+            return
+
+        reporte = generar_reporte(nombre, fecha)
+        await query.message.reply_text(reporte, parse_mode="Markdown")
+        guardar_consulta(nombre, fecha, reporte=reporte)
+
+        context.user_data.clear()
+        await query.message.reply_text("✅ Reporte enviado. Usa /individual para otro.")
+
+
+# ───────────── TEXTO ─────────────
 
 async def manejar_mensaje(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if context.user_data.get('esperando') == 'individual':
-        texto = update.message.text.strip()
-        nombre = None
-        fecha = None
-        for linea in texto.split('\n'):
-            if linea.lower().startswith('nombre:'):
-                nombre = linea[7:].strip()
-            elif linea.lower().startswith('fecha:'):
-                fecha = linea[6:].strip()
-        
-        if nombre and fecha:
-            reporte = generar_reporte(nombre, fecha)  # Sin pareja
-            await update.message.reply_text(reporte, parse_mode='Markdown')
-            guardar_consulta(nombre, fecha, reporte=reporte)
-            context.user_data.clear()
-            await update.message.reply_text("✅ Reporte enviado. Usa /individual para otro.")
-        else:
-            await update.message.reply_text(
-                "❌ Formato incorrecto.\n\nEnvía:\n*Nombre:* tu nombre completo\n*Fecha:* DD/MM/AAAA",
-                parse_mode='Markdown'
-            )
+    esperando = context.user_data.get("esperando")
+    texto = update.message.text.strip()
+
+    if esperando == "nombre":
+        context.user_data["nombre"] = texto
+        context.user_data["esperando"] = None
+        await update.message.reply_text("✅ Nombre guardado.")
+
+    elif esperando == "fecha":
+        context.user_data["fecha"] = texto
+        context.user_data["esperando"] = None
+        await update.message.reply_text("✅ Fecha guardada.")
+
+
+# ───────────── MAIN ─────────────
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
 
     app = Application.builder().token(TOKEN).build()
-    
+
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("ayuda", ayuda))
     app.add_handler(CommandHandler("individual", individual))
+    app.add_handler(CallbackQueryHandler(botones))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, manejar_mensaje))
-    
+
     print("🤖 Numeria: El Oráculo iniciado - Online 24/7 en Railway")
 
     def keep_alive():
@@ -77,5 +123,5 @@ if __name__ == '__main__':
             print(f"Keep alive - Bot activo - {time.strftime('%H:%M:%S')}")
 
     threading.Thread(target=keep_alive, daemon=True).start()
-    
+
     app.run_polling(drop_pending_updates=True)
