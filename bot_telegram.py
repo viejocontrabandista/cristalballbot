@@ -47,7 +47,7 @@ async def individual(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await update.message.reply_text(
         "🔮 *Estudio Numerológico Individual*\n\n"
-        "Usá los botones para ingresar tus datos:",
+        "Usá los botones para ingresar tus datos y obtener tu lectura:",
         reply_markup=InlineKeyboardMarkup(keyboard),
         parse_mode="Markdown"
     )
