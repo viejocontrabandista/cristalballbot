@@ -54,7 +54,7 @@ def porcentaje_afinidad(num1: int, num2: int) -> int:
     return 50
 
 
-def generar_reporte(nombre: str, fecha: str, nombre_pareja: str = None, fecha_pareja: str = None) -> str:
+def generar_reporte(nombre: str, fecha: str) -> str:
     nv = numero_vida(fecha)
     nd = numero_destino(nombre)
     nombre_corto = nombre.split()[0] if ' ' in nombre else nombre
@@ -81,21 +81,6 @@ def generar_reporte(nombre: str, fecha: str, nombre_pareja: str = None, fecha_pa
             "tu misión interna se expresa a través de tus talentos externos de forma poderosa.\n\n"
         )
 
-    if nombre_pareja and fecha_pareja:
-        nv2 = numero_vida(fecha_pareja)
-        porc = porcentaje_afinidad(nv, nv2)
-
-        texto += f"💞 *Compatibilidad Energética con {nombre_pareja.upper()}*\n"
-        texto += f"Su vibración principal: {nv2} | Tu vibración: {nv}\n"
-        texto += f"Afinidad total: *{porc}%*\n\n"
-
-        if porc >= 80:
-            texto += "¡Conexión del alma! Potencial para una relación profunda y transformadora ❤️\n"
-        elif porc >= 60:
-            texto += "Buena química con lecciones enriquecedoras. Con esfuerzo, crecen juntos 🌟\n"
-        else:
-            texto += "Relación de crecimiento kármico. Los desafíos son maestros para evolucionar 🌱\n"
-
     texto += "\n🃏 *Mensaje Final del Oráculo*\n"
     texto += (
         f"{nombre_corto}, tu camino está iluminado por números poderosos. "
@@ -109,7 +94,7 @@ def generar_reporte(nombre: str, fecha: str, nombre_pareja: str = None, fecha_pa
     return texto
 
 
-def consulta_existe(nombre: str, fecha: str, nombre_pareja: str = None, fecha_pareja: str = None) -> bool:
+def consulta_existe(nombre: str, fecha: str) -> bool:
     if not os.path.exists(HISTORIAL_FILE):
         return False
 
@@ -117,22 +102,16 @@ def consulta_existe(nombre: str, fecha: str, nombre_pareja: str = None, fecha_pa
         historial = json.load(f)
 
     clave = f"{nombre.upper()}_{fecha}"
-    if nombre_pareja:
-        clave += f"_{nombre_pareja.upper()}_{fecha_pareja or ''}"
 
     for entrada in historial:
         clave_exist = f"{entrada['nombre'].upper()}_{entrada['fecha']}"
-        if entrada.get('nombre_pareja'):
-            clave_exist += f"_{entrada['nombre_pareja'].upper()}_{entrada.get('fecha_pareja', '')}"
         if clave == clave_exist:
             return True
 
     return False
 
 
-def guardar_consulta(nombre: str, fecha: str, nombre_pareja: str = None,
-                     fecha_pareja: str = None, reporte: str = None):
-
+def guardar_consulta(nombre: str, fecha: str, reporte: str = None):
     if not os.path.exists(HISTORIAL_FILE):
         with open(HISTORIAL_FILE, 'w', encoding='utf-8') as f:
             json.dump([], f)
@@ -143,8 +122,6 @@ def guardar_consulta(nombre: str, fecha: str, nombre_pareja: str = None,
     historial.append({
         "nombre": nombre,
         "fecha": fecha,
-        "nombre_pareja": nombre_pareja,
-        "fecha_pareja": fecha_pareja,
         "reporte": reporte
     })
 
