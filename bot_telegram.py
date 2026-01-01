@@ -1,6 +1,6 @@
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
-from calculos import generar_reporte, consulta_existe, guardar_consulta
+from calculos import generar_reporte, guardar_consulta
 import threading
 import time
 import logging
