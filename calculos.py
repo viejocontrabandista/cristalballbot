@@ -40,12 +40,38 @@ def generar_reporte(nombre: str, fecha: str, nombre_pareja: str = None, fecha_pa
     nv = numero_vida(fecha)
     nd = numero_destino(nombre)
     nombre_corto = nombre.split()[0] if ' ' in nombre else nombre
+
     texto = f"🔮 *Estudio Numerológico Personalizado para {nombre.upper()}*\n\n"
-    texto += f"Querido/a {nombre_corto}, las estrellas y los números han hablado sobre tu esencia...\n\n"
-    texto += f"• *Tu Número de Vida (Misión del Alma): {nv}*\n{significados[str(nv)]}\n\n"
-    texto += f"• *Tu Número de Destino (Talento Natural): {nd}*\n{significados[str(nd)]}\n\n"
-    texto += "Tu combinación energética es única y poderosa. Cuando alineas tu acción diaria con estas vibraciones, la vida fluye con magia y sincronías increíbles ✨\n\n"
-    
+    texto += f"Querido/a {nombre_corto}, las vibraciones de tu alma y tu expresión han sido reveladas...\n\n"
+
+    texto += f"🌟 *Número de Vida (Misión del Alma): {nv}*\n"
+    texto += f"{significados[str(nv)]}\n\n"
+
+    texto += f"⭐ *Número de Destino (Talento y Expresión): {nd}*\n"
+    texto += f"{data['destino'][str(nd)]}\n\n"  # Usa la nueva lista
+
+    if nv == nd:
+        texto += f"¡Tu Vida y Destino son el mismo {nv}! Esto indica una alineación perfecta: tu misión interna y tu expresión externa están en total armonía. Eres una persona con propósito claro y presencia magnética ✨\n\n"
+    else:
+        texto += "Tu combinación de Vida y Destino crea una dinámica única: tu misión interna se expresa a través de tus talentos externos de forma poderosa.\n\n"
+
+    if nombre_pareja and fecha_pareja:
+        nv2 = numero_vida(fecha_pareja)
+        porc = porcentaje_afinidad(nv, nv2)
+        texto += f"💞 *Compatibilidad Energética con {nombre_pareja.upper()}*\n"
+        texto += f"Su vibración principal: {nv2} | Tu vibración: {nv}\n"
+        texto += f"Afinidad total: *{porc}%*\n\n"
+        if porc >= 80:
+            texto += "¡Conexión del alma! Potencial para una relación profunda y transformadora ❤️\n"
+        elif porc >= 60:
+            texto += "Buena química con lecciones enriquecedoras. Con esfuerzo, crecen juntos 🌟\n"
+        else:
+            texto += "Relación de crecimiento kármico. Los desafíos son maestros para evolucionar 🌱\n"
+
+    texto += "\n🃏 *Mensaje Final del Oráculo*\n"
+    texto += f"{nombre_corto}, tu camino está iluminado por números poderosos. Confía en tu esencia, actúa con amor y observa cómo el universo te responde con abundancia y magia ✨"
+
+    return texto
     if nombre_pareja and fecha_pareja:
         nv2 = numero_vida(fecha_pareja)
         porc = porcentaje_afinidad(nv, nv2)
