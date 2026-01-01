@@ -6,36 +6,53 @@ with open('numerologia_data.json', 'r', encoding='utf-8') as f:
     data = json.load(f)
 
 tabla = data['tabla_letras']
-significados = data['significados'] Nota: para que funcione la nueva lista, agrega al principio de calculos.py (después de cargar data):
-Pythondestino_significados = data['destino']
+significados = data['significados']
+
+# Nota: para que funcione la nueva lista, agrega al principio de calculos.py (después de cargar data):
+destino_significados = data['destino']
 
 HISTORIAL_FILE = 'historial.json'
+
 
 def reducir_numero(n):
     while n > 9 and n not in [11, 22]:
         n = sum(int(d) for d in str(n))
     return n
 
+
 def numero_vida(fecha_str: str) -> int:
-    dia, mes, año = map(int, fecha_str.split('/'))
-    return reducir_numero(dia + mes + año)
+    dia, mes, anio = map(int, fecha_str.split('/'))
+    return reducir_numero(dia + mes + anio)
+
 
 def numero_destino(nombre: str) -> int:
     nombre = nombre.upper().replace(" ", "")
     suma = sum(tabla.get(letra, 0) for letra in nombre)
     return reducir_numero(suma)
 
+
 def porcentaje_afinidad(num1: int, num2: int) -> int:
     if num1 == num2:
         return 95
-    pares_alta = [(1,3),(1,5),(1,9),(2,4),(2,6),(2,8),(3,1),(3,5),(3,9),
-                  (4,2),(4,6),(4,8),(5,1),(5,3),(5,9),(6,2),(6,4),(6,9),
-                  (7,7),(9,1),(9,3),(9,5),(9,6)]
+
+    pares_alta = [
+        (1, 3), (1, 5), (1, 9), (2, 4), (2, 6), (2, 8),
+        (3, 1), (3, 5), (3, 9),
+        (4, 2), (4, 6), (4, 8),
+        (5, 1), (5, 3), (5, 9),
+        (6, 2), (6, 4), (6, 9),
+        (7, 7),
+        (9, 1), (9, 3), (9, 5), (9, 6)
+    ]
+
     if (num1, num2) in pares_alta or (num2, num1) in pares_alta:
         return 85
-    if num1 in [11,22] or num2 in [11,22]:
+
+    if num1 in [11, 22] or num2 in [11, 22]:
         return 75
+
     return 50
+
 
 def generar_reporte(nombre: str, fecha: str, nombre_pareja: str = None, fecha_pareja: str = None) -> str:
     nv = numero_vida(fecha)
@@ -49,19 +66,29 @@ def generar_reporte(nombre: str, fecha: str, nombre_pareja: str = None, fecha_pa
     texto += f"{significados[str(nv)]}\n\n"
 
     texto += f"⭐ *Número de Destino (Talento y Expresión): {nd}*\n"
-    texto += f"{data['destino'][str(nd)]}\n\n"  # Usa la nueva lista
+    texto += f"{data['destino'][str(nd)]}\n\n"
 
+    # Usa la nueva lista
     if nv == nd:
-        texto += f"¡Tu Vida y Destino son el mismo {nv}! Esto indica una alineación perfecta: tu misión interna y tu expresión externa están en total armonía. Eres una persona con propósito claro y presencia magnética ✨\n\n"
+        texto += (
+            f"¡Tu Vida y Destino son el mismo {nv}! Esto indica una alineación perfecta: "
+            "tu misión interna y tu expresión externa están en total armonía. "
+            "Eres una persona con propósito claro y presencia magnética ✨\n\n"
+        )
     else:
-        texto += "Tu combinación de Vida y Destino crea una dinámica única: tu misión interna se expresa a través de tus talentos externos de forma poderosa.\n\n"
+        texto += (
+            "Tu combinación de Vida y Destino crea una dinámica única: "
+            "tu misión interna se expresa a través de tus talentos externos de forma poderosa.\n\n"
+        )
 
     if nombre_pareja and fecha_pareja:
         nv2 = numero_vida(fecha_pareja)
         porc = porcentaje_afinidad(nv, nv2)
+
         texto += f"💞 *Compatibilidad Energética con {nombre_pareja.upper()}*\n"
         texto += f"Su vibración principal: {nv2} | Tu vibración: {nv}\n"
         texto += f"Afinidad total: *{porc}%*\n\n"
+
         if porc >= 80:
             texto += "¡Conexión del alma! Potencial para una relación profunda y transformadora ❤️\n"
         elif porc >= 60:
@@ -70,54 +97,49 @@ def generar_reporte(nombre: str, fecha: str, nombre_pareja: str = None, fecha_pa
             texto += "Relación de crecimiento kármico. Los desafíos son maestros para evolucionar 🌱\n"
 
     texto += "\n🃏 *Mensaje Final del Oráculo*\n"
-    texto += f"{nombre_corto}, tu camino está iluminado por números poderosos. Confía en tu esencia, actúa con amor y observa cómo el universo te responde con abundancia y magia ✨"
+    texto += (
+        f"{nombre_corto}, tu camino está iluminado por números poderosos. "
+        "Confía en tu esencia, actúa con amor y observa cómo el universo te responde "
+        "con abundancia y magia ✨"
+    )
+
+    cold = generar_cold_reading()
+    texto += "\n\n🃏 *Lectura Intuitiva Personal*\n" + cold
 
     return texto
-    if nombre_pareja and fecha_pareja:
-        nv2 = numero_vida(fecha_pareja)
-        porc = porcentaje_afinidad(nv, nv2)
-        texto += f"💞 *Análisis de Compatibilidad con {nombre_pareja.upper()}*\n"
-        texto += f"Su vibración principal: {nv2} | Tu vibración: {nv}\n"
-        texto += f"Afinidad energética total: *{porc}%*\n\n"
-        if porc >= 80:
-            texto += "¡Una conexión del alma! Tienen potencial para construir algo eterno y profundo. El universo los juntó por una razón hermosa ❤️\n"
-        elif porc >= 60:
-            texto += "Buena química con lecciones valiosas. Con comunicación abierta, pueden crecer juntos y crear magia 🌟\n"
-        else:
-            texto += "Una relación kármica de crecimiento. Los desafíos son oportunidades disfrazadas para evolucionar espiritualmente 🌱\n"
-    
-    # Cold reading al final (corregido: con paréntesis)
-    cold = generar_cold_reading()
-    texto += "\n🃏 *Lectura Intuitiva Personal*\n" + cold
-    
-    return texto
+
 
 def consulta_existe(nombre: str, fecha: str, nombre_pareja: str = None, fecha_pareja: str = None) -> bool:
     if not os.path.exists(HISTORIAL_FILE):
         return False
+
     with open(HISTORIAL_FILE, 'r', encoding='utf-8') as f:
         historial = json.load(f)
-    
+
     clave = f"{nombre.upper()}_{fecha}"
     if nombre_pareja:
         clave += f"_{nombre_pareja.upper()}_{fecha_pareja or ''}"
-    
+
     for entrada in historial:
         clave_exist = f"{entrada['nombre'].upper()}_{entrada['fecha']}"
         if entrada.get('nombre_pareja'):
             clave_exist += f"_{entrada['nombre_pareja'].upper()}_{entrada.get('fecha_pareja', '')}"
         if clave == clave_exist:
             return True
+
     return False
 
-def guardar_consulta(nombre: str, fecha: str, nombre_pareja: str = None, fecha_pareja: str = None, reporte: str = None):
+
+def guardar_consulta(nombre: str, fecha: str, nombre_pareja: str = None,
+                     fecha_pareja: str = None, reporte: str = None):
+
     if not os.path.exists(HISTORIAL_FILE):
         with open(HISTORIAL_FILE, 'w', encoding='utf-8') as f:
             json.dump([], f)
-    
+
     with open(HISTORIAL_FILE, 'r', encoding='utf-8') as f:
         historial = json.load(f)
-    
+
     historial.append({
         "nombre": nombre,
         "fecha": fecha,
@@ -125,9 +147,10 @@ def guardar_consulta(nombre: str, fecha: str, nombre_pareja: str = None, fecha_p
         "fecha_pareja": fecha_pareja,
         "reporte": reporte
     })
-    
+
     with open(HISTORIAL_FILE, 'w', encoding='utf-8') as f:
         json.dump(historial, f, ensure_ascii=False, indent=4)
+
 
 def generar_cold_reading(genero: str = None, consulta: str = None) -> str:
     import random
